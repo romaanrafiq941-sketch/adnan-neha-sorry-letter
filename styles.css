@@ -1,326 +1,74 @@
-/* refined cinematic theme - removed floating hearts for a more elegant look */
+/* cute + beautiful styling for the envelope + letter card */
 :root{
-  --bg1: #1b0d18;
-  --bg2: #2b1530;
-  --card: rgba(38, 20, 37, 0.8);
-  --paper: rgba(255,255,255,0.96);
-  --pink: #f7bfd3;
-  --pink-strong: #d95d8d;
-  --purple: #af88f3;
-  --text: #f7edf5;
-  --muted: #ead7dd;
-  --line: rgba(255, 200, 220, 0.12);
-  --shadow: 0 20px 60px rgba(0,0,0,0.45);
-  --soft-shadow: 0 12px 28px rgba(13, 8, 17, 0.28);
+  --bg1: #1e0f19;
+  --bg2: #2d1530;
+  --accent-pink: #ffc9dd;
+  --accent-rose: #ffddee;
+  --paper: #fffafc;
+  --deep-rose: #e45886;
+  --muted: #e8d7db;
+  --card-shadow: 0 18px 50px rgba(13,8,17,0.34);
+  --soft-shadow: 0 10px 28px rgba(13,8,17,0.22);
 
   --letter-font-size: 1.35rem;
   --letter-line-height: 1.95;
-  --letter-padding: 26px;
+  --letter-padding: 28px;
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:radial-gradient(circle at 10% 10%, rgba(255,210,230,0.06), transparent 15%), radial-gradient(circle at 90% 90%, rgba(140,100,200,0.03), transparent 12%), linear-gradient(180deg,#3d233d 0%,var(--bg2) 46%,var(--bg1) 100%);font-family:Montserrat, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; color: #fff}
+body{display:flex;align-items:center;justify-content:center;padding:28px}
 
-html, body {
-  margin: 0;
-  min-height: 100%;
-  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-  color: var(--text);
-  background: radial-gradient(circle at top, #3d233d 0%, var(--bg2) 46%, var(--bg1) 100%);
+/* page layout */
+.page-shell{width:min(1120px,100%);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 10px 18px}
+.identity{display:flex;gap:18px;align-items:center}
+.name-display .label{display:block;font-size:12px;color:var(--muted);letter-spacing:0.04em}
+.name-display strong{font-weight:700;color:#fff}
+.toolbar{display:flex;gap:10px}
+button{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer}
+button.soft{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.04)}
+
+/* center envelope, remove card visuals */
+.main-card{background:transparent;padding:0}
+.story-grid{display:flex;justify-content:center;padding:18px 0;margin:0}
+
+/* envelope styling - cute */
+.envelope{position:relative;width:min(760px,92vw);height:420px;perspective:1200px;margin:0 auto}
+.envelope .envelope-top{position:absolute;inset:0;border-radius:24px;background:linear-gradient(180deg,var(--accent-rose),var(--accent-pink));box-shadow:inset 0 10px 24px rgba(255,255,255,0.45);}
+.envelope .envelope-flap{position:absolute;left:0;right:0;top:0;height:100%;clip-path:polygon(0 0,100% 0,50% 58%);border-radius:24px;background:linear-gradient(135deg,#fff0f6,#ffd3e6);transform-origin:top center;transition:transform .9s cubic-bezier(.2,.9,.2,1);}
+.envelope.open .envelope-flap{transform:rotateX(-180deg)}
+
+/* cute decorative hearts on the envelope */
+.envelope .decor-hearts{position:absolute;right:18px;top:18px;width:86px;height:40px;pointer-events:none}
+.envelope .decor-hearts::before,.envelope .decor-hearts::after{content:'';position:absolute;width:18px;height:18px;background:radial-gradient(circle at 30% 30%, #fff 0%, rgba(255,255,255,0.7) 10%, transparent 70%),linear-gradient(180deg,#ffd7e8,#ffbcd2);transform:rotate(-45deg);border-radius:50% 50% 0 50%;box-shadow:0 6px 18px rgba(224,99,140,0.12)}
+.envelope .decor-hearts::before{left:0;top:0;transform:scale(.98) rotate(-45deg)}
+.envelope .decor-hearts::after{left:26px;top:8px;transform:scale(.78) rotate(-40deg);opacity:0.95}
+
+/* letter card - softer, cuter */
+.letter{position:absolute;left:12%;right:12%;top:22%;bottom:12%;background:var(--paper);border-radius:20px;padding:var(--letter-padding);box-shadow:0 22px 48px rgba(29,11,20,0.18);border:1px solid rgba(230,185,200,0.6);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.letter-head{font-family:'Playfair Display', serif;color:#2a1720;font-size:1.7rem;margin-bottom:6px}
+.letter-body{font-size:var(--letter-font-size);line-height:var(--letter-line-height);color:#38242a;white-space:pre-wrap;overflow:auto;padding-right:8px}
+.letter-end{display:flex;flex-direction:column;align-items:flex-end;color:#6a4b51;font-weight:700}
+#letterFrom{color:var(--deep-rose);font-size:1.22rem}
+
+/* subtle paper texture using gradient */
+.letter::before{content:'';position:absolute;left:0;top:0;right:0;bottom:0;border-radius:20px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.01));mix-blend-mode:multiply}
+
+/* cute scrollbar */
+.letter-body::-webkit-scrollbar{width:9px}
+.letter-body::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ffd6e6,#ffb3d1);border-radius:999px;border:2px solid rgba(255,255,255,0.6)}
+
+/* responsive tweaks */
+@media (max-width:780px){
+  .envelope{height:360px}
+  .letter{left:10%;right:10%;top:22%;bottom:12%}
+  .letter-head{font-size:1.35rem}
 }
 
-body{
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 18px;
-  overflow-x: hidden;
-}
-
-body.fullscreen-mode {
-  padding: 0 !important;
-  background: radial-gradient(circle at top, #3d233d 0%, var(--bg2) 46%, var(--bg1) 100%);
-}
-
-.page-shell{
-  position: relative;
-  width: min(1120px, 100%);
-  z-index: 1;
-}
-
-body.fullscreen-mode .page-shell {
-  width: 100vw;
-  max-width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 16px 20px 10px;
-}
-
-.topbar{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  padding: 10px 16px 18px;
-  flex-wrap: wrap;
-}
-
-body.fullscreen-mode .topbar {
-  padding-top: 10px;
-}
-
-.identity{
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  align-items: center;
-  width: 100%;
-}
-
-.name-display{
-  min-width: 110px;
-  text-align: center;
-}
-
-.name-display .label{
-  display: block;
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.04em;
-}
-
-.name-display strong{
-  font-size: 17px;
-  color: var(--text);
-  font-weight: 700;
-}
-
-.toolbar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-button{
-  border: none;
-  border-radius: 999px;
-  padding: 11px 18px;
-  cursor: pointer;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  transition: transform 0.18s ease;
-}
-
-button:hover{ transform: translateY(-1px); }
-
-#fullScreenBtn,
-#revealBtn {
-  background: linear-gradient(135deg, #f792bc, #d9558b);
-  color: white;
-  box-shadow: var(--soft-shadow);
-}
-
-.soft{
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  border: 1px solid var(--line);
-}
-
-.main-card{
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
-.story-grid{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 36px 0;
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-body.fullscreen-mode .story-grid {
-  max-width: 1000px;
-  padding-top: 28px;
-}
-
-.letter-area{
-  flex: 1.4;
-  min-width: 300px;
-}
-
-.envelope{
-  width: min(620px, 100%);
-  height: 360px;
-  position: relative;
-  perspective: 1200px;
-  cursor: pointer;
-  user-select: none;
-}
-
-body.fullscreen-mode .envelope {
-  width: min(960px, 92vw);
-  height: min(72vh, 620px);
-}
-
-.envelope-top{
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #ffeef3, #f7cfe0);
-  box-shadow: inset 0 10px 20px rgba(255,255,255,0.18);
-}
-
-.envelope-flap{
-  position: absolute;
-  left: 0; right: 0; top: 0;
-  height: 100%;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #ffedf4, #f6c4d9);
-  clip-path: polygon(0 0, 100% 0, 50% 58%);
-  transform-origin: top center;
-  transition: transform 0.9s ease;
-  z-index: 3;
-}
-
-.envelope.open .envelope-flap{
-  transform: rotateX(-180deg);
-}
-
-.letter{
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  top: 23%;
-  bottom: 10%;
-  background: var(--paper);
-  border-radius: 18px;
-  box-shadow: var(--soft-shadow);
-  border: 1px solid rgba(187, 109, 142, 0.14);
-  padding: var(--letter-padding);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 2;
-  overflow: hidden;
-  transition: transform 0.38s ease;
-}
-
-body.fullscreen-mode .letter {
-  left: 15%;
-  right: 15%;
-  top: 20%;
-  bottom: 12%;
-}
-
-.envelope.open .letter{
-  transform: translateY(-8px);
-}
-
-.letter-head{
-  font-size: clamp(1.08rem, 1vw + 0.8rem, 1.5rem);
-  color: #221c20;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.letter-body{
-  white-space: pre-wrap;
-  line-height: var(--letter-line-height);
-  font-size: var(--letter-font-size);
-  color: #2d1e23;
-  margin: 12px 0;
-  overflow: auto;
-  padding-right: 10px;
-}
-
-.letter-end{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  color: #604853;
-  font-weight: 700;
-}
-
-#letterFrom{
-  color: var(--pink-strong);
-  font-size: 1.28rem;
-}
-
-.editor-panel{
-  display: none;
-  margin-top: 18px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: var(--soft-shadow);
-  padding: 18px;
-}
-
-.editor-panel h2{
-  margin: 0 0 12px;
-  color: var(--text);
-  font-size: 1.1rem;
-}
-
-#letterEditor{
-  width: 100%;
-  resize: vertical;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
-  border-radius: 12px;
-  padding: 14px;
-}
-
-.editor-actions{
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 12px;
-  gap: 10px;
-}
-
-#saveBtn{
-  background: linear-gradient(135deg, #5ebc88, #3a8a62);
-  color: white;
-}
-
-#cancelBtn{
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--line);
-  color: var(--text);
-}
-
-.footer{
-  text-align: center;
-  color: var(--muted);
-  padding-top: 8px;
-  font-size: 0.92rem;
-}
-
-body.fullscreen-mode .footer {
-  padding-top: 6px;
-}
-
-@media (max-width: 560px){
-  .letter{
-    left: 10%;
-    right: 10%;
-    top: 24%;
-    bottom: 8%;
-    padding: 16px 14px 12px;
-  }
-
-  :root{
-    --letter-font-size: 1.12rem;
-    --letter-line-height: 1.9;
-  }
+@media (max-width:420px){
+  body{padding:14px}
+  .envelope{height:320px}
+  .letter{padding:18px}
+  .letter-head{font-size:1.1rem}
 }
