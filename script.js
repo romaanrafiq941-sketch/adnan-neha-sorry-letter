@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 I am so sorry. I know I have hurt you, and I know my mistakes have left a pain in your heart that I never wanted to cause. Even when I failed to show it in the right way, my love for you has always been real, deep, and honest.
 
-You mean everything to me. Your smile, your peace, your trust, your presence in my life — all of it matters more than I can ever explain. I may not always know how to express my feelings perfectly, but I want you to know this with all my heart: I love you more than words can say.
+You mean everything to me. Your smile, your peace, your trust, and your presence in my life matter more than I can ever explain. I may not always know how to express my feelings perfectly, but I want you to know this with all my heart: I love you more than words can say.
 
 I am sorry for every moment that made you feel less loved, less seen, or less important. I am sorry for hurting you, and I am sorry for every time I made you doubt how much you mean to me. Please know that my heart has always belonged to you, and no one else will ever have the place you hold in me.
 
@@ -38,8 +38,87 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
   const musicToggle = document.getElementById('musicToggle');
   const bgMusic = document.getElementById('bgMusic');
 
+  // Gallery elements
+  const galleryImage = document.getElementById('galleryImage');
+  const prevPhoto = document.getElementById('prevPhoto');
+  const nextPhoto = document.getElementById('nextPhoto');
+  const galleryThumbs = document.getElementById('galleryThumbs');
+
+  // Add text size toggle
+  const textSizeToggle = document.getElementById('textSizeToggle');
+
   let currentText = defaultLetter;
   let typing = false;
+
+  // Swan images (royalty-free Pixabay) - replace with your own if desired
+  const swanImages = [
+    'https://cdn.pixabay.com/photo/2016/11/23/00/45/swan-1850154_1280.jpg',
+    'https://cdn.pixabay.com/photo/2018/06/11/10/14/swan-3475679_1280.jpg',
+    'https://cdn.pixabay.com/photo/2016/11/29/06/16/swan-1869246_1280.jpg'
+  ];
+  let photoIndex = 0;
+  let galleryTimer = null;
+
+  function updateGallery(index) {
+    photoIndex = (index + swanImages.length) % swanImages.length;
+    galleryImage.src = swanImages[photoIndex];
+
+    // update thumbs active state
+    const buttons = galleryThumbs.querySelectorAll('button');
+    buttons.forEach((btn, i) => btn.classList.toggle('active', i === photoIndex));
+  }
+
+  function createThumbs() {
+    swanImages.forEach((src, i) => {
+      const btn = document.createElement('button');
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `Swan ${i+1}`;
+      btn.appendChild(img);
+      btn.addEventListener('click', () => {
+        updateGallery(i);
+        resetGalleryTimer();
+      });
+      galleryThumbs.appendChild(btn);
+    });
+  }
+
+  function nextGallery() {
+    updateGallery(photoIndex + 1);
+  }
+  function prevGallery() {
+    updateGallery(photoIndex - 1);
+  }
+
+  function startGalleryTimer() {
+    stopGalleryTimer();
+    galleryTimer = setInterval(() => nextGallery(), 5000);
+  }
+  function stopGalleryTimer() {
+    if (galleryTimer) { clearInterval(galleryTimer); galleryTimer = null; }
+  }
+  function resetGalleryTimer() { stopGalleryTimer(); startGalleryTimer(); }
+
+  // Text size toggle handler
+  if (textSizeToggle) {
+    let large = false;
+    textSizeToggle.addEventListener('click', () => {
+      large = !large;
+      if (large) {
+        document.documentElement.style.setProperty('--letter-font-size', '1.45rem');
+        document.documentElement.style.setProperty('--letter-line-height', '2.05');
+        document.documentElement.style.setProperty('--letter-padding', '28px');
+        textSizeToggle.textContent = 'A-';
+        textSizeToggle.setAttribute('aria-pressed','true');
+      } else {
+        document.documentElement.style.setProperty('--letter-font-size', '1.18rem');
+        document.documentElement.style.setProperty('--letter-line-height', '1.95');
+        document.documentElement.style.setProperty('--letter-padding', '22px');
+        textSizeToggle.textContent = 'A+';
+        textSizeToggle.setAttribute('aria-pressed','false');
+      }
+    });
+  }
 
   function updateNames() {
     letterTo.textContent = `My dearest ${toInput.value || 'Neha'},`;
@@ -51,13 +130,13 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
     letterBody.textContent = '';
   }
 
-  async function typeReveal(text, speed = 14) {
+  async function typeReveal(text, speed = 12) {
     typing = true;
     letterBody.textContent = '';
     for (let i = 0; i < text.length; i++) {
       letterBody.textContent += text[i];
       if (text[i] === '\n') {
-        await new Promise(r => setTimeout(r, speed * 6));
+        await new Promise(r => setTimeout(r, speed * 7));
       } else {
         await new Promise(r => setTimeout(r, speed));
       }
@@ -90,7 +169,8 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
     const from = fromInput.value || 'Adnan';
     const to = toInput.value || 'Neha';
     const filename = `sorry-letter-${sanitizeName(from)}-to-${sanitizeName(to)}.txt`;
-    const blob = new Blob([`To: ${to}\nFrom: ${from}\n\n${currentText}`], { type: 'text/plain;charset=utf-8' });
+    const content = `To: ${to}\nFrom: ${from}\n\n${currentText}`;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');
@@ -143,6 +223,14 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
       }
     });
   }
+
+  // gallery controls
+  if (nextPhoto) nextPhoto.addEventListener('click', () => { nextGallery(); resetGalleryTimer(); });
+  if (prevPhoto) prevPhoto.addEventListener('click', () => { prevGallery(); resetGalleryTimer(); });
+
+  createThumbs();
+  updateGallery(0);
+  startGalleryTimer();
 
   updateNames();
   letterBody.textContent = currentText;

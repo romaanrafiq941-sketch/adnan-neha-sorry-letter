@@ -7,7 +7,12 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="background-hearts">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="floating-hearts">
+    <span>♥</span>
+    <span>♥</span>
     <span>♥</span>
     <span>♥</span>
     <span>♥</span>
@@ -16,9 +21,9 @@
     <span>♥</span>
   </div>
 
-  <div class="container">
+  <div class="page-shell">
     <header class="topbar">
-      <div class="name-box">
+      <div class="identity">
         <label>From
           <input id="fromName" type="text" value="Adnan" />
         </label>
@@ -27,60 +32,73 @@
         </label>
       </div>
 
-      <div class="top-actions">
-        <button id="revealBtn">Reveal Love</button>
-        <button id="editBtn" class="ghost">Edit</button>
-        <button id="downloadBtn">Download</button>
+      <div class="toolbar">
+        <button id="revealBtn">Reveal My Heart</button>
+        <button id="editBtn" class="soft">Edit</button>
+        <button id="downloadBtn" class="violet">Download</button>
+        <!-- Optional large-text toggle -->
+        <button id="textSizeToggle" class="soft" aria-pressed="false">A+</button>
       </div>
     </header>
 
-    <main class="card">
-      <div class="content">
-        <div class="envelope-wrap">
+    <main class="main-card">
+      <div class="story-grid">
+        <section class="letter-area">
           <div class="envelope" id="envelope" tabindex="0" aria-label="Open letter">
             <div class="envelope-top"></div>
             <div class="envelope-flap"></div>
+
             <div class="letter">
-              <div class="letter-header">
+              <div class="letter-head">
                 <span id="letterTo">My dearest Neha,</span>
               </div>
 
               <div class="letter-body" id="letterBody"></div>
 
-              <div class="letter-footer">
-                <span>With all my love,</span>
-                <span id="letterFrom">Adnan</span>
+              <div class="letter-end">
+                <span>Forever yours,</span>
+                <strong id="letterFrom">Adnan</strong>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <section class="side-panel">
-          <div class="photo-frame">
-            <img
-              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
-              alt="Romantic couple"
-            />
+        <aside class="photo-panel">
+          <div class="photo-box">
+            <!-- Swans gallery -->
+            <div id="gallery" class="gallery">
+              <button id="prevPhoto" class="gallery-nav" aria-label="Previous photo">‹</button>
+              <img id="galleryImage" src="https://cdn.pixabay.com/photo/2016/11/23/00/45/swan-1850154_1280.jpg" alt="Romantic swans">
+              <button id="nextPhoto" class="gallery-nav" aria-label="Next photo">›</button>
+              <div class="gallery-thumbs" id="galleryThumbs"></div>
+            </div>
           </div>
 
-          <div class="music-block">
+          <div class="memory-card">
+            <h3>Our Story</h3>
+            <p>
+              Every time I think about you, I remember the warmth, the peace, and the love that only you bring into my life.
+            </p>
+          </div>
+
+          <div class="music-box">
             <button id="musicToggle">Play soft music</button>
           </div>
-        </section>
+        </aside>
       </div>
     </main>
 
-    <aside class="editor-panel" id="editorPanel">
+    <section class="editor-panel" id="editorPanel">
       <h2>Edit the letter</h2>
       <textarea id="letterEditor" rows="12"></textarea>
       <div class="editor-actions">
         <button id="saveBtn">Save</button>
         <button id="cancelBtn">Cancel</button>
       </div>
-    </aside>
+    </section>
 
     <footer class="footer">
-      A little apology. A lot of love. Always.
+      A little sorry. A lot of love. Always you.
     </footer>
   </div>
 
