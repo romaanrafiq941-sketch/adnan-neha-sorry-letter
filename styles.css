@@ -251,3 +251,21 @@ body{
     --letter-line-height: 1.9;
   }
 }
+
+/* ---- Overrides: remove the surrounding "card" so only the envelope shows ---- */
+.main-card{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* center the envelope and constrain width so it appears alone */
+.story-grid{
+  padding: 36px 0;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* remove footer spacing if desired */
+.footer{ padding-top: 8px; }
