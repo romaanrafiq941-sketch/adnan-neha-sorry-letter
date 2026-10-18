@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Letter from Adnan to Neha — Sorry</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <h1 class="title">A Letter from Adnan to Neha</h1>
+
+    <section class="controls">
+      <label>
+        From:
+        <input id="fromName" type="text" value="Adnan" />
+      </label>
+      <label>
+        To:
+        <input id="toName" type="text" value="Neha" />
+      </label>
+      <div class="buttons">
+        <button id="playBtn">Reveal Letter</button>
+        <button id="editBtn">Edit Letter</button>
+        <button id="downloadBtn">Download .txt</button>
+        <button id="printBtn">Print</button>
+      </div>
+    </section>
+
+    <section class="envelope-area">
+      <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="card">
+          <div class="letter" id="letter">
+            <div class="letter-header">
+              <span id="letterTo">My dearest Neha,</span>
+            </div>
+            <div class="letter-body" id="letterBody"></div>
+            <div class="letter-sign" id="letterSign">With love, <span id="letterFrom">Adnan</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="editor" id="editor" aria-hidden="true">
+      <h2>Edit the letter</h2>
+      <textarea id="letterEditor" rows="10"></textarea>
+      <div class="editor-actions">
+        <button id="saveBtn">Save</button>
+        <button id="cancelBtn">Cancel</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Tip: Use "Edit Letter" to personalize the message; then click "Reveal Letter" to animate the reveal.
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
