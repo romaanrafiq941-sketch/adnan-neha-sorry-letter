@@ -3,58 +3,75 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Letter from Adnan to Neha — Sorry</title>
+  <title>For Neha — From Adnan</title>
   <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#fff0f6">
 </head>
 <body>
-  <main class="page">
-    <h1 class="title">A Letter from Adnan to Neha</h1>
+  <div class="container">
+    <header class="header">
+      <h1>For Neha — From Adnan</h1>
+      <p class="subtitle">A little page to say I'm sorry and to remind you how much you mean to me.</p>
+    </header>
 
-    <section class="controls">
-      <label>
-        From:
-        <input id="fromName" type="text" value="Adnan" />
-      </label>
-      <label>
-        To:
-        <input id="toName" type="text" value="Neha" />
-      </label>
-      <div class="buttons">
-        <button id="playBtn">Reveal Letter</button>
-        <button id="editBtn">Edit Letter</button>
-        <button id="downloadBtn">Download .txt</button>
-        <button id="printBtn">Print</button>
-      </div>
-    </section>
-
-    <section class="envelope-area">
-      <div class="envelope" id="envelope">
-        <div class="flap"></div>
-        <div class="card">
-          <div class="letter" id="letter">
-            <div class="letter-header">
-              <span id="letterTo">My dearest Neha,</span>
+    <main class="main">
+      <section class="left">
+        <div class="envelope" id="envelope" tabindex="0" role="button" aria-pressed="false" aria-label="Open letter">
+          <div class="flap"></div>
+          <div class="card">
+            <div class="letter">
+              <div class="letter-to" id="letterTo">My dearest Neha,</div>
+              <div class="letter-body" id="letterBody" aria-live="polite"></div>
+              <div class="letter-sign" id="letterSign">Always yours,<br><span id="letterFrom">Adnan</span></div>
             </div>
-            <div class="letter-body" id="letterBody"></div>
-            <div class="letter-sign" id="letterSign">With love, <span id="letterFrom">Adnan</span></div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="editor" id="editor" aria-hidden="true">
-      <h2>Edit the letter</h2>
-      <textarea id="letterEditor" rows="10"></textarea>
-      <div class="editor-actions">
-        <button id="saveBtn">Save</button>
-        <button id="cancelBtn">Cancel</button>
-      </div>
-    </section>
+        <div class="controls">
+          <label class="small">From: <input id="fromName" value="Adnan" /></label>
+          <label class="small">To: <input id="toName" value="Neha" /></label>
+          <div class="buttons">
+            <button id="revealBtn">Reveal Letter</button>
+            <button id="editBtn">Edit Letter</button>
+            <button id="downloadBtn">Download</button>
+            <button id="printBtn">Print</button>
+          </div>
+        </div>
+
+        <div class="editor" id="editor" aria-hidden="true">
+          <h2>Edit the letter</h2>
+          <textarea id="letterEditor" rows="8"></textarea>
+          <div class="editor-actions">
+            <button id="saveBtn">Save</button>
+            <button id="cancelBtn">Cancel</button>
+          </div>
+        </div>
+
+      </section>
+
+      <aside class="right">
+        <div class="photo-card">
+          <img id="heroPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop&s=000000" alt="Romantic photo">
+        </div>
+
+        <div class="extras">
+          <div class="music">
+            <button id="musicToggle">Play music</button>
+            <small class="muted">Replace the audio source in script.js to use your own song.</small>
+          </div>
+          <div class="status" id="status"></div>
+        </div>
+      </aside>
+    </main>
 
     <footer class="footer">
-      Tip: Use "Edit Letter" to personalize the message; then click "Reveal Letter" to animate the reveal.
+      <small>Tip: Use "Edit Letter" to personalize; then click "Reveal Letter" for the typewriter animation.</small>
     </footer>
-  </main>
+  </div>
+
+  <audio id="bgMusic" loop crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_1d0dd9b6a3.mp3?filename=romantic-piano-110426.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>
