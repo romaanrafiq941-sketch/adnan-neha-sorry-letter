@@ -37,10 +37,25 @@ body{
   overflow-x: hidden;
 }
 
+body.fullscreen-mode {
+  padding: 0 !important;
+  background: radial-gradient(circle at top, #3d233d 0%, var(--bg2) 46%, var(--bg1) 100%);
+}
+
 .page-shell{
   position: relative;
   width: min(1120px, 100%);
   z-index: 1;
+}
+
+body.fullscreen-mode .page-shell {
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 20px 10px;
 }
 
 .topbar{
@@ -50,6 +65,10 @@ body{
   gap: 18px;
   padding: 10px 16px 18px;
   flex-wrap: wrap;
+}
+
+body.fullscreen-mode .topbar {
+  padding-top: 10px;
 }
 
 .identity{
@@ -79,12 +98,42 @@ body{
   font-weight: 700;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button{
+  border: none;
+  border-radius: 999px;
+  padding: 11px 18px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 0.18s ease;
+}
+
+button:hover{ transform: translateY(-1px); }
+
+#fullScreenBtn,
+#revealBtn {
+  background: linear-gradient(135deg, #f792bc, #d9558b);
+  color: white;
+  box-shadow: var(--soft-shadow);
+}
+
+.soft{
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
 .main-card{
-  background: rgba(43, 24, 40, 0.82);
-  border: 1px solid rgba(255,255,255,0.04);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  padding: 20px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .story-grid{
@@ -92,6 +141,14 @@ body{
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 36px 0;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+body.fullscreen-mode .story-grid {
+  max-width: 1000px;
+  padding-top: 28px;
 }
 
 .letter-area{
@@ -106,6 +163,11 @@ body{
   perspective: 1200px;
   cursor: pointer;
   user-select: none;
+}
+
+body.fullscreen-mode .envelope {
+  width: min(960px, 92vw);
+  height: min(72vh, 620px);
 }
 
 .envelope-top{
@@ -149,6 +211,13 @@ body{
   z-index: 2;
   overflow: hidden;
   transition: transform 0.38s ease;
+}
+
+body.fullscreen-mode .letter {
+  left: 15%;
+  right: 15%;
+  top: 20%;
+  bottom: 12%;
 }
 
 .envelope.open .letter{
@@ -233,8 +302,12 @@ body{
 .footer{
   text-align: center;
   color: var(--muted);
-  padding-top: 18px;
+  padding-top: 8px;
   font-size: 0.92rem;
+}
+
+body.fullscreen-mode .footer {
+  padding-top: 6px;
 }
 
 @media (max-width: 560px){
@@ -251,21 +324,3 @@ body{
     --letter-line-height: 1.9;
   }
 }
-
-/* ---- Overrides: remove the surrounding "card" so only the envelope shows ---- */
-.main-card{
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
-/* center the envelope and constrain width so it appears alone */
-.story-grid{
-  padding: 36px 0;
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-/* remove footer spacing if desired */
-.footer{ padding-top: 8px; }

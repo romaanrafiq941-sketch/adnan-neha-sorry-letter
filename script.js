@@ -26,6 +26,7 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
   const fromName = 'Adnan';
   const toName = 'Neha';
 
+  const fullScreenBtn = document.getElementById('fullScreenBtn');
   const editBtn = document.getElementById('editBtn');
   const saveBtn = document.getElementById('saveBtn');
   const cancelBtn = document.getElementById('cancelBtn');
@@ -42,8 +43,8 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
     if (staticFrom) staticFrom.textContent = fromName;
     if (staticTo) staticTo.textContent = toName;
 
-    letterTo.textContent = `My dearest ${toName},`;
-    letterFrom.textContent = fromName;
+    if (letterTo) letterTo.textContent = `My dearest ${toName},`;
+    if (letterFrom) letterFrom.textContent = fromName;
   }
 
   function setLetterText(text) {
@@ -80,6 +81,29 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
     editorPanel.style.display = 'none';
   }
 
+  function toggleFullScreen() {
+    const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
+
+    if (!isFullscreen) {
+      const root = document.documentElement;
+      if (root.requestFullscreen) {
+        root.requestFullscreen();
+      } else if (root.webkitRequestFullscreen) {
+        root.webkitRequestFullscreen();
+      }
+      document.body.classList.add('fullscreen-mode');
+      if (fullScreenBtn) fullScreenBtn.textContent = 'Exit Full Screen';
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      document.body.classList.remove('fullscreen-mode');
+      if (fullScreenBtn) fullScreenBtn.textContent = 'Full Screen';
+    }
+  }
+
   function sanitizeName(name) {
     return String(name || '').replace(/[^a-z0-9_\-\.]/gi, '_');
   }
@@ -97,6 +121,10 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+  }
+
+  if (fullScreenBtn) {
+    fullScreenBtn.addEventListener('click', toggleFullScreen);
   }
 
   if (document.getElementById('revealBtn')) {
@@ -129,6 +157,18 @@ im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, l
   if (document.getElementById('downloadBtn')) {
     document.getElementById('downloadBtn').addEventListener('click', downloadLetter);
   }
+
+  document.addEventListener('fullscreenchange', () => {
+    const isActive = !!document.fullscreenElement;
+    document.body.classList.toggle('fullscreen-mode', isActive);
+    if (fullScreenBtn) fullScreenBtn.textContent = isActive ? 'Exit Full Screen' : 'Full Screen';
+  });
+
+  document.addEventListener('webkitfullscreenchange', () => {
+    const isActive = !!document.webkitFullscreenElement;
+    document.body.classList.toggle('fullscreen-mode', isActive);
+    if (fullScreenBtn) fullScreenBtn.textContent = isActive ? 'Exit Full Screen' : 'Full Screen';
+  });
 
   updateNames();
   letterBody.textContent = currentText;
