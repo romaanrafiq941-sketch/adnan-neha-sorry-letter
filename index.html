@@ -1,76 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>For Neha — From Adnan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Neha</title>
   <link rel="stylesheet" href="styles.css" />
-  <meta name="theme-color" content="#fff0f6">
 </head>
 <body>
+  <div class="background-hearts">
+    <span>♥</span>
+    <span>♥</span>
+    <span>♥</span>
+    <span>♥</span>
+    <span>♥</span>
+    <span>♥</span>
+  </div>
+
   <div class="container">
-    <header class="header">
-      <h1>For Neha — From Adnan</h1>
-      <p class="subtitle">A little page to say I'm sorry and to remind you how much you mean to me.</p>
+    <header class="topbar">
+      <div class="name-box">
+        <label>From
+          <input id="fromName" type="text" value="Adnan" />
+        </label>
+        <label>To
+          <input id="toName" type="text" value="Neha" />
+        </label>
+      </div>
+
+      <div class="top-actions">
+        <button id="revealBtn">Reveal Love</button>
+        <button id="editBtn" class="ghost">Edit</button>
+        <button id="downloadBtn">Download</button>
+      </div>
     </header>
 
-    <main class="main">
-      <section class="left">
-        <div class="envelope" id="envelope" tabindex="0" role="button" aria-pressed="false" aria-label="Open letter">
-          <div class="flap"></div>
-          <div class="card">
+    <main class="card">
+      <div class="content">
+        <div class="envelope-wrap">
+          <div class="envelope" id="envelope" tabindex="0" aria-label="Open letter">
+            <div class="envelope-top"></div>
+            <div class="envelope-flap"></div>
             <div class="letter">
-              <div class="letter-to" id="letterTo">My dearest Neha,</div>
-              <div class="letter-body" id="letterBody" aria-live="polite"></div>
-              <div class="letter-sign" id="letterSign">Always yours,<br><span id="letterFrom">Adnan</span></div>
+              <div class="letter-header">
+                <span id="letterTo">My dearest Neha,</span>
+              </div>
+
+              <div class="letter-body" id="letterBody"></div>
+
+              <div class="letter-footer">
+                <span>With all my love,</span>
+                <span id="letterFrom">Adnan</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="controls">
-          <label class="small">From: <input id="fromName" value="Adnan" /></label>
-          <label class="small">To: <input id="toName" value="Neha" /></label>
-          <div class="buttons">
-            <button id="revealBtn">Reveal Letter</button>
-            <button id="editBtn">Edit Letter</button>
-            <button id="downloadBtn">Download</button>
-            <button id="printBtn">Print</button>
+        <section class="side-panel">
+          <div class="photo-frame">
+            <img
+              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+              alt="Romantic couple"
+            />
           </div>
-        </div>
 
-        <div class="editor" id="editor" aria-hidden="true">
-          <h2>Edit the letter</h2>
-          <textarea id="letterEditor" rows="8"></textarea>
-          <div class="editor-actions">
-            <button id="saveBtn">Save</button>
-            <button id="cancelBtn">Cancel</button>
+          <div class="music-block">
+            <button id="musicToggle">Play soft music</button>
           </div>
-        </div>
-
-      </section>
-
-      <aside class="right">
-        <div class="photo-card">
-          <img id="heroPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop&s=000000" alt="Romantic photo">
-        </div>
-
-        <div class="extras">
-          <div class="music">
-            <button id="musicToggle">Play music</button>
-            <small class="muted">Replace the audio source in script.js to use your own song.</small>
-          </div>
-          <div class="status" id="status"></div>
-        </div>
-      </aside>
+        </section>
+      </div>
     </main>
 
+    <aside class="editor-panel" id="editorPanel">
+      <h2>Edit the letter</h2>
+      <textarea id="letterEditor" rows="12"></textarea>
+      <div class="editor-actions">
+        <button id="saveBtn">Save</button>
+        <button id="cancelBtn">Cancel</button>
+      </div>
+    </aside>
+
     <footer class="footer">
-      <small>Tip: Use "Edit Letter" to personalize; then click "Reveal Letter" for the typewriter animation.</small>
+      A little apology. A lot of love. Always.
     </footer>
   </div>
 
-  <audio id="bgMusic" loop crossorigin="anonymous">
-    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_1d0dd9b6a3.mp3?filename=romantic-piano-110426.mp3" type="audio/mpeg">
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_ceb47c0c82.mp3?filename=gentle-ambient-114463.mp3" type="audio/mpeg" />
   </audio>
 
   <script src="script.js"></script>

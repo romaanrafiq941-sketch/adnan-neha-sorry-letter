@@ -3,16 +3,20 @@
 document.addEventListener('DOMContentLoaded', () => {
   const defaultLetter = `Neha,
 
-I want to start by saying I'm truly sorry. I know I hurt you, and there isn't a good excuse for the pain I caused. I’ve been thinking a lot about what happened and about how my words and actions affected you.
+I am so sorry. I know I have hurt you, and I know my mistakes have left a pain in your heart that I never wanted to cause. Even when I failed to show it in the right way, my love for you has always been real, deep, and honest.
 
-You mean everything to me — your happiness matters more than anything. If I could undo the moments that hurt you, I would. Since I can't, I promise to learn, to listen better, and to be the person you deserve. I will show you through my actions, not just my words.
+You mean everything to me. Your smile, your peace, your trust, your presence in my life — all of it matters more than I can ever explain. I may not always know how to express my feelings perfectly, but I want you to know this with all my heart: I love you more than words can say.
 
-Please forgive me. I'm ready to do the hard work to rebuild your trust and to hold our love with the care it deserves.
+I am sorry for every moment that made you feel less loved, less seen, or less important. I am sorry for hurting you, and I am sorry for every time I made you doubt how much you mean to me. Please know that my heart has always belonged to you, and no one else will ever have the place you hold in me.
 
-Always yours,
+My love, my life, my peace — all of it is you. You are my woman, my comfort, my home, and the one I never want to lose. If I could turn back time and protect your heart, I would. Since I cannot, I will spend every day proving to you through my actions, my words, and my effort that I am worthy of your forgiveness and your love.
+
+Please give me another chance to love you the way you deserve. I am ready to listen, to grow, and to become a better man for you. You deserve all my patience, my honesty, and my sincere love.
+
+With all my heart,
 Adnan
 
-im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai sach mai hadd se zyda pyaar krta hu tumse shayad muje ye express krna nhi ataa bbut iloveyou my wifey.....aur tumare jagah mere dil mai koyi nhi le skta aur na he mai dunga ye jagah kissi ko kyu ki mere dil ki malika tum ho aur rahogi humesha`;
+im very sorry my wifey neha, mujhe pata hai tumhe hamesha hurt hota hai mujse, lekin main sach mein hadd se zyada pyaar karta hoon tumse. Shayad main apni feelings ko sahi tarike se express nahi kar pata, par dil se main tumse bahut pyar karta hoon. Tumhari jagah mere dil mein kisi aur ki nahi hai, aur kabhi nahi hogi. Mere dil ki malika tum ho, aur tum hamesha raho gi.`;
 
   const envelope = document.getElementById('envelope');
   const letterBody = document.getElementById('letterBody');
@@ -25,16 +29,14 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
   const revealBtn = document.getElementById('revealBtn');
   const editBtn = document.getElementById('editBtn');
   const downloadBtn = document.getElementById('downloadBtn');
-  const printBtn = document.getElementById('printBtn');
 
-  const editor = document.getElementById('editor');
+  const editorPanel = document.getElementById('editorPanel');
   const letterEditor = document.getElementById('letterEditor');
   const saveBtn = document.getElementById('saveBtn');
   const cancelBtn = document.getElementById('cancelBtn');
 
   const musicToggle = document.getElementById('musicToggle');
   const bgMusic = document.getElementById('bgMusic');
-  const status = document.getElementById('status');
 
   let currentText = defaultLetter;
   let typing = false;
@@ -63,7 +65,7 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
     typing = false;
   }
 
-  function openEnvelopeAndReveal() {
+  function revealLetter() {
     envelope.classList.add('open');
     updateNames();
     if (!typing) {
@@ -73,21 +75,24 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
 
   function showEditor() {
     letterEditor.value = currentText;
-    editor.style.display = 'block';
-    editor.setAttribute('aria-hidden', 'false');
-    letterEditor.focus();
-  }
-  function hideEditor() {
-    editor.style.display = 'none';
-    editor.setAttribute('aria-hidden', 'true');
+    editorPanel.style.display = 'block';
   }
 
-  function sanitizeFilename(name) {
-    return name.replace(/[^a-z0-9_\-\.]/gi, '_');
+  function hideEditor() {
+    editorPanel.style.display = 'none';
   }
-  function downloadText(filename, text) {
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+
+  function sanitizeName(name) {
+    return String(name || '').replace(/[^a-z0-9_\-\.]/gi, '_');
+  }
+
+  function downloadLetter() {
+    const from = fromInput.value || 'Adnan';
+    const to = toInput.value || 'Neha';
+    const filename = `sorry-letter-${sanitizeName(from)}-to-${sanitizeName(to)}.txt`;
+    const blob = new Blob([`To: ${to}\nFrom: ${from}\n\n${currentText}`], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
@@ -97,12 +102,21 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
     URL.revokeObjectURL(url);
   }
 
-  if (revealBtn) revealBtn.addEventListener('click', openEnvelopeAndReveal);
-  if (envelope) envelope.addEventListener('click', () => {
-    const isOpen = envelope.classList.toggle('open');
-    envelope.setAttribute('aria-pressed', String(isOpen));
-    if (isOpen) openEnvelopeAndReveal();
-  });
+  if (revealBtn) revealBtn.addEventListener('click', revealLetter);
+
+  if (envelope) {
+    envelope.addEventListener('click', () => {
+      envelope.classList.toggle('open');
+      if (envelope.classList.contains('open')) revealLetter();
+    });
+
+    envelope.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        envelope.click();
+      }
+    });
+  }
 
   if (editBtn) editBtn.addEventListener('click', showEditor);
   if (saveBtn) saveBtn.addEventListener('click', () => {
@@ -111,17 +125,9 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
     hideEditor();
     letterBody.textContent = text;
   });
+
   if (cancelBtn) cancelBtn.addEventListener('click', hideEditor);
-
-  if (downloadBtn) downloadBtn.addEventListener('click', () => {
-    const from = fromInput.value || 'Adnan';
-    const to = toInput.value || 'Neha';
-    const header = `To: ${to}\nFrom: ${from}\n\n`;
-    const filename = `letter-${sanitizeFilename(from)}-to-${sanitizeFilename(to)}.txt`;
-    downloadText(filename, header + currentText);
-  });
-
-  if (printBtn) printBtn.addEventListener('click', () => window.print());
+  if (downloadBtn) downloadBtn.addEventListener('click', downloadLetter);
 
   if (fromInput) fromInput.addEventListener('input', updateNames);
   if (toInput) toInput.addEventListener('input', updateNames);
@@ -129,11 +135,11 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
   if (musicToggle && bgMusic) {
     musicToggle.addEventListener('click', () => {
       if (bgMusic.paused) {
-        bgMusic.play().catch(()=>{});
+        bgMusic.play().catch(() => {});
         musicToggle.textContent = 'Pause music';
       } else {
         bgMusic.pause();
-        musicToggle.textContent = 'Play music';
+        musicToggle.textContent = 'Play soft music';
       }
     });
   }
@@ -142,22 +148,8 @@ im vwey sorry my wifey neha muje pata tumahe huesha hurt hota h mujse lekin mai 
   letterBody.textContent = currentText;
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => {
-        if (status) status.textContent = 'Site cached for offline use.';
-        console.log('Service Worker registered:', reg.scope);
-      })
-      .catch(err => {
-        console.warn('Service Worker registration failed:', err);
-      });
-  }
-
-  if (envelope) {
-    envelope.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        envelope.click();
-      }
+    navigator.serviceWorker.register('./sw.js').catch((err) => {
+      console.warn('Service worker registration failed:', err);
     });
   }
 });
